@@ -1,11 +1,11 @@
 package controllers
 
 import (
+	"api-go-rest/database"
 	"api-go-rest/models"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -15,17 +15,23 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func AllCharactersHandler(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(models.Characters)
+	var p []models.Character
+	database.DB.Find(&p)
+	json.NewEncoder(w).Encode(p)
 }
 
 func OneCharacterHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
+	var p models.Character
+	database.DB.First(&p, id)
+	json.NewEncoder(w).Encode(p)
+}
 
-	for _, char := range models.Characters {
-		id, _ := strconv.Atoi(id)
-		if char.Id == id {
-			json.NewEncoder(w).Encode(char)
-		}
-	}
+func CreateCharacter(w http.ResponseWriter, r *http.Request) {
+	var char models.Character
+	json.NewDecoder(r.Body).Decode(&char) //recebe dados e decodifica no char
+	database.DB.Create(&char)
+	json.NewEncoder(w).Encode(char) //encodifica char e exibe no ReponseWriter
+
 }
