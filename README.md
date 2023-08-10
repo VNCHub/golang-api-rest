@@ -37,7 +37,7 @@ The project by default has some initialized data in the "characters" table
 
 **1. To view all data in JSON format**, perform a GET request to the address <http://localhost:8000/api/characters>
 
-**2. To view data in JSON format**, perform a GET request to the address <http://localhost:8000/api/characters/{id}> where "id" is a number from 1-10.
+**2. To view one data in JSON format**, perform a GET request to the address <http://localhost:8000/api/characters/{id}> where "id" is a number from 1-10.
 
 **3. To create data**, perform a POST request to the address <http://localhost:8000/api/characters> with the body of the request containing a JSON file, informing the "name" and "history" according to the model:
 
