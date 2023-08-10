@@ -15,17 +15,17 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func AllCharactersHandler(w http.ResponseWriter, r *http.Request) {
-	var p []models.Character
-	database.DB.Find(&p)
-	json.NewEncoder(w).Encode(p)
+	var char []models.Character
+	database.DB.Find(&char)
+	json.NewEncoder(w).Encode(char)
 }
 
 func OneCharacterHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	var p models.Character
-	database.DB.First(&p, id)
-	json.NewEncoder(w).Encode(p)
+	var char models.Character
+	database.DB.First(&char, id)
+	json.NewEncoder(w).Encode(char)
 }
 
 func CreateCharacter(w http.ResponseWriter, r *http.Request) {

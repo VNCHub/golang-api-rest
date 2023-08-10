@@ -2,6 +2,7 @@ package routes
 
 import (
 	"api-go-rest/controllers"
+	"api-go-rest/middleware"
 	"fmt"
 	"log"
 	"net/http"
@@ -11,12 +12,13 @@ import (
 
 func HandleRequest() {
 	r := mux.NewRouter()
+	r.Use(middleware.ContentTypeMiddleware)
 	r.HandleFunc("/", controllers.HomeHandler)
 	r.HandleFunc("/api/characters", controllers.AllCharactersHandler).Methods("Get")
-	r.HandleFunc("/api/character/{id}", controllers.OneCharacterHandler).Methods("Get")
+	r.HandleFunc("/api/characters/{id}", controllers.OneCharacterHandler).Methods("Get")
 	r.HandleFunc("/api/characters", controllers.CreateCharacter).Methods("Post")
-	r.HandleFunc("/api/character/{id}", controllers.DeleteCharacter).Methods("Delete")
-	r.HandleFunc("/api/character/{id}", controllers.EditCharacter).Methods("Put")
+	r.HandleFunc("/api/characters/{id}", controllers.DeleteCharacter).Methods("Delete")
+	r.HandleFunc("/api/characters/{id}", controllers.EditCharacter).Methods("Put")
 	http.Handle("/", r)
 
 	fmt.Println("Starting API REST on port :8000...")
